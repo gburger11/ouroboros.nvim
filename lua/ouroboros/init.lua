@@ -53,8 +53,9 @@ function M.switch()
             search_pattern = "^.*" .. filename .. "%..*$";
         }
 
-        -- search 1) in the same path as the original file, and then 2) in the project tree if we still haven't found a match
-        for _, p in ipairs({path, '.'}) do
+        -- search 1) in the current path, then 2) in the same path as the original file
+        local current_path = vim.loop.cwd()
+        for _, p in ipairs({current_path, path}) do
         -- look for files that meet our above criteria
             local matching_files = scan.scan_dir(p, scan_opts)
 
